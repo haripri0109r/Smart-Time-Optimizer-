@@ -13,11 +13,10 @@ A simple Java-based project that helps users manage their daily tasks effectivel
 ---
 
 ## 🛠️ Technologies Used
-- **Frontend:html,css,**
+- **Frontend:html,css**
 - **Java (Core Java, OOP Concepts)**
 - **Collections (ArrayList, etc.)**
-- **File Handling / JDBC** (for DBMS implementation – future extension)
-
+- **File Handling** 
 ---
 
 ## 📂 Project Structure
