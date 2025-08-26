@@ -18,5 +18,3 @@ A simple Java-based project that helps users manage their daily tasks effectivel
 - **Collections (ArrayList, etc.)**
 - **File Handling** 
 ---
-
-## 📂 Project Structure
