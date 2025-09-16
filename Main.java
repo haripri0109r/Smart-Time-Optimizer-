@@ -49,11 +49,22 @@ public class Main {
         sc.close();
     }
 
-    private static void addTask() {
-       
+    private static void addTask(Scanner sc) {
+        System.out.print("Enter task title: ");
+        String title = sc.nextLine();
+        System.out.print("Enter priority (HIGH/MEDIUM/LOW): ");
+        String priority = sc.nextLine().toUpperCase();
+
+        Task t = new Task(counter++, title, priority);
+        tasks.add(t);
+        System.out.println("Task added successfully!");
     }
 
     private static void viewTasks() {
-        // to be implemented
+        if (tasks.isEmpty()) {
+            System.out.println("No tasks available!");
+        } else {
+            tasks.forEach(System.out::println);
+        }
     }
 }
