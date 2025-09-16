@@ -40,7 +40,8 @@ public class Main {
             System.out.println("1. Add Task");
             System.out.println("2. View Tasks");
             System.out.println("3. Mark Task Completed");
-            System.out.println("4. Exit");
+            System.out.println("4. Delete Task");
+            System.out.println("5. Exit");
             System.out.print("Enter choice: ");
             choice = sc.nextInt();
             sc.nextLine(); // consume newline
@@ -49,10 +50,11 @@ public class Main {
                 case 1 -> addTask(sc);
                 case 2 -> viewTasks();
                 case 3 -> markTaskCompleted(sc);
-                case 4 -> System.out.println("Exiting...");
+                case 4 -> deleteTask(sc);
+                case 5 -> System.out.println("Exiting...");
                 default -> System.out.println("Invalid choice!");
             }
-        } while (choice != 4);
+        } while (choice != 5);
         sc.close();
     }
 
@@ -64,12 +66,12 @@ public class Main {
 
         Task t = new Task(counter++, title, priority);
         tasks.add(t);
-        System.out.println(" Task added successfully!");
+        System.out.println("✅ Task added successfully!");
     }
 
     private static void viewTasks() {
         if (tasks.isEmpty()) {
-            System.out.println(" No tasks available!");
+            System.out.println("⚠ No tasks available!");
         } else {
             System.out.println("\n--- Task List ---");
             tasks.forEach(System.out::println);
@@ -88,13 +90,29 @@ public class Main {
         for (Task t : tasks) {
             if (t.getId() == id) {
                 t.setCompleted(true);
-                System.out.println(" Task marked as completed!");
+                System.out.println("✅ Task marked as completed!");
                 found = true;
                 break;
             }
         }
         if (!found) {
-            System.out.println(" Task not found!");
+            System.out.println("❌ Task not found!");
+        }
+    }
+
+    private static void deleteTask(Scanner sc) {
+        if (tasks.isEmpty()) {
+            System.out.println("⚠ No tasks available to delete!");
+            return;
+        }
+        System.out.print("Enter Task ID to delete: ");
+        int id = sc.nextInt();
+        boolean removed = tasks.removeIf(t -> t.getId() == id);
+
+        if (removed) {
+            System.out.println("🗑 Task deleted successfully!");
+        } else {
+            System.out.println("❌ Task not found!");
         }
     }
 }
