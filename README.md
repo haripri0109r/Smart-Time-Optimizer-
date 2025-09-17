@@ -4,6 +4,14 @@ A **console-based Java application** that helps users manage and organize their 
 
 ---
 
+## 🖼️ UML Diagram
+
+<p align="center">
+  <img src="c:\Users\bluef\OneDrive\Pictures\Screenshots 1\uml diagram.png" alt="SPTO UML Diagram" width="600"/>
+</p>
+
+---
+
 ## 🚀 Features
 
 - Add and manage tasks with **priority** (HIGH / MEDIUM / LOW).  
@@ -27,6 +35,8 @@ A **console-based Java application** that helps users manage and organize their 
 - **JDBC:** Java Database Connectivity to interact with SQL  
 
 ---
+
+
 
 
 
