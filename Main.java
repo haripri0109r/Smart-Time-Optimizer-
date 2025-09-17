@@ -1,8 +1,9 @@
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-class Task {
+class Task implements Serializable {
     private int id;
     private String title;
     private String priority;
@@ -24,15 +25,18 @@ class Task {
 
     @Override
     public String toString() {
-        return id + " | " + title + " | Priority: " + priority + " | Status: " + (isCompleted ? "✅ Completed" : "⌛ Pending");
+        return id + " | " + title + " | Priority: " + priority + " | Status: " + (isCompleted ? "Completed" : "Pending");
     }
 }
 
 public class Main {
     private static List<Task> tasks = new ArrayList<>();
     private static int counter = 1;
+    private static final String FILE_NAME = "tasks.dat";
 
     public static void main(String[] args) {
+        loadTasks();
+
         Scanner sc = new Scanner(System.in);
         int choice;
         do {
@@ -43,7 +47,8 @@ public class Main {
             System.out.println("4. Delete Task");
             System.out.println("5. Report Summary");
             System.out.println("6. View Tasks by Priority");
-            System.out.println("7. Exit");
+            System.out.println("7. Save Tasks");
+            System.out.println("8. Exit");
             System.out.print("Enter choice: ");
             choice = sc.nextInt();
             sc.nextLine(); // consume newline
@@ -55,10 +60,14 @@ public class Main {
                 case 4 -> deleteTask(sc);
                 case 5 -> reportSummary();
                 case 6 -> viewTasksByPriority(sc);
-                case 7 -> System.out.println("Exiting...");
+                case 7 -> saveTasks();
+                case 8 -> {
+                    saveTasks();
+                    System.out.println("Exiting...");
+                }
                 default -> System.out.println("Invalid choice!");
             }
-        } while (choice != 7);
+        } while (choice != 8);
         sc.close();
     }
 
@@ -70,12 +79,12 @@ public class Main {
 
         Task t = new Task(counter++, title, priority);
         tasks.add(t);
-        System.out.println(" Task added successfully!");
+        System.out.println("Task added successfully!");
     }
 
     private static void viewTasks() {
         if (tasks.isEmpty()) {
-            System.out.println(" No tasks available!");
+            System.out.println("No tasks available!");
         } else {
             System.out.println("\n--- Task List ---");
             tasks.forEach(System.out::println);
@@ -84,7 +93,7 @@ public class Main {
 
     private static void markTaskCompleted(Scanner sc) {
         if (tasks.isEmpty()) {
-            System.out.println(" No tasks available to mark!");
+            System.out.println("No tasks available to mark!");
             return;
         }
         System.out.print("Enter Task ID to mark as completed: ");
@@ -94,19 +103,19 @@ public class Main {
         for (Task t : tasks) {
             if (t.getId() == id) {
                 t.setCompleted(true);
-                System.out.println(" Task marked as completed!");
+                System.out.println("Task marked as completed!");
                 found = true;
                 break;
             }
         }
         if (!found) {
-            System.out.println(" Task not found!");
+            System.out.println("Task not found!");
         }
     }
 
     private static void deleteTask(Scanner sc) {
         if (tasks.isEmpty()) {
-            System.out.println(" No tasks available to delete!");
+            System.out.println("No tasks available to delete!");
             return;
         }
         System.out.print("Enter Task ID to delete: ");
@@ -114,9 +123,9 @@ public class Main {
         boolean removed = tasks.removeIf(t -> t.getId() == id);
 
         if (removed) {
-            System.out.println(" Task deleted successfully!");
+            System.out.println("Task deleted successfully!");
         } else {
-            System.out.println(" Task not found!");
+            System.out.println("Task not found!");
         }
     }
 
@@ -126,9 +135,9 @@ public class Main {
         long pending = total - completed;
 
         System.out.println("\n--- Report Summary ---");
-        System.out.println(" Total Tasks: " + total);
-        System.out.println(" Completed: " + completed);
-        System.out.println(" Pending: " + pending);
+        System.out.println("Total Tasks: " + total);
+        System.out.println("Completed: " + completed);
+        System.out.println("Pending: " + pending);
     }
 
     private static void viewTasksByPriority(Scanner sc) {
@@ -148,7 +157,31 @@ public class Main {
             }
         }
         if (!found) {
-            System.out.println(" No tasks found with " + filter + " priority.");
+            System.out.println("No tasks found with " + filter + " priority.");
+        }
+    }
+
+    private static void saveTasks() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_NAME))) {
+            oos.writeObject(tasks);
+            System.out.println("Tasks saved successfully!");
+        } catch (IOException e) {
+            System.out.println("Error saving tasks: " + e.getMessage());
+        }
+    }
+
+    private static void loadTasks() {
+        File file = new File(FILE_NAME);
+        if (!file.exists()) return;
+
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILE_NAME))) {
+            tasks = (List<Task>) ois.readObject();
+            if (!tasks.isEmpty()) {
+                counter = tasks.get(tasks.size() - 1).getId() + 1;
+            }
+            System.out.println("Tasks loaded successfully!");
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error loading tasks: " + e.getMessage());
         }
     }
 }
