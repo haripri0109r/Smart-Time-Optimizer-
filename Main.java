@@ -38,11 +38,12 @@ public class Main {
         do {
             System.out.println("\n--- Smart Time ---");
             System.out.println("1. Add Task");
-            System.out.println("2. View Tasks");
+            System.out.println("2. View All Tasks");
             System.out.println("3. Mark Task Completed");
             System.out.println("4. Delete Task");
             System.out.println("5. Report Summary");
-            System.out.println("6. Exit");
+            System.out.println("6. View Tasks by Priority");
+            System.out.println("7. Exit");
             System.out.print("Enter choice: ");
             choice = sc.nextInt();
             sc.nextLine(); // consume newline
@@ -53,10 +54,11 @@ public class Main {
                 case 3 -> markTaskCompleted(sc);
                 case 4 -> deleteTask(sc);
                 case 5 -> reportSummary();
-                case 6 -> System.out.println("Exiting...");
+                case 6 -> viewTasksByPriority(sc);
+                case 7 -> System.out.println("Exiting...");
                 default -> System.out.println("Invalid choice!");
             }
-        } while (choice != 6);
+        } while (choice != 7);
         sc.close();
     }
 
@@ -73,7 +75,7 @@ public class Main {
 
     private static void viewTasks() {
         if (tasks.isEmpty()) {
-            System.out.println("⚠ No tasks available!");
+            System.out.println(" No tasks available!");
         } else {
             System.out.println("\n--- Task List ---");
             tasks.forEach(System.out::println);
@@ -82,7 +84,7 @@ public class Main {
 
     private static void markTaskCompleted(Scanner sc) {
         if (tasks.isEmpty()) {
-            System.out.println("⚠ No tasks available to mark!");
+            System.out.println(" No tasks available to mark!");
             return;
         }
         System.out.print("Enter Task ID to mark as completed: ");
@@ -127,5 +129,26 @@ public class Main {
         System.out.println(" Total Tasks: " + total);
         System.out.println(" Completed: " + completed);
         System.out.println(" Pending: " + pending);
+    }
+
+    private static void viewTasksByPriority(Scanner sc) {
+        if (tasks.isEmpty()) {
+            System.out.println("No tasks available!");
+            return;
+        }
+        System.out.print("Enter priority to filter (HIGH/MEDIUM/LOW): ");
+        String filter = sc.nextLine().toUpperCase();
+
+        System.out.println("\n--- " + filter + " Priority Tasks ---");
+        boolean found = false;
+        for (Task t : tasks) {
+            if (t.getPriority().equals(filter)) {
+                System.out.println(t);
+                found = true;
+            }
+        }
+        if (!found) {
+            System.out.println(" No tasks found with " + filter + " priority.");
+        }
     }
 }
