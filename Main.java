@@ -48,7 +48,8 @@ public class Main {
             System.out.println("5. Report Summary");
             System.out.println("6. View Tasks by Priority");
             System.out.println("7. Save Tasks");
-            System.out.println("8. Exit");
+            System.out.println("8. Search Task by Title");
+            System.out.println("9. Exit");
             System.out.print("Enter choice: ");
             choice = sc.nextInt();
             sc.nextLine(); // consume newline
@@ -61,13 +62,14 @@ public class Main {
                 case 5 -> reportSummary();
                 case 6 -> viewTasksByPriority(sc);
                 case 7 -> saveTasks();
-                case 8 -> {
+                case 8 -> searchTaskByTitle(sc);
+                case 9 -> {
                     saveTasks();
                     System.out.println("Exiting...");
                 }
                 default -> System.out.println("Invalid choice!");
             }
-        } while (choice != 8);
+        } while (choice != 9);
         sc.close();
     }
 
@@ -158,6 +160,26 @@ public class Main {
         }
         if (!found) {
             System.out.println("No tasks found with " + filter + " priority.");
+        }
+    }
+
+    private static void searchTaskByTitle(Scanner sc) {
+        if (tasks.isEmpty()) {
+            System.out.println("No tasks available to search!");
+            return;
+        }
+        System.out.print("Enter title keyword to search: ");
+        String keyword = sc.nextLine().toLowerCase();
+
+        boolean found = false;
+        for (Task t : tasks) {
+            if (t.getTitle().toLowerCase().contains(keyword)) {
+                System.out.println(t);
+                found = true;
+            }
+        }
+        if (!found) {
+            System.out.println("No tasks found with keyword: " + keyword);
         }
     }
 
