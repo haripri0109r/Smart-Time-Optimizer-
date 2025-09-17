@@ -1,20 +1,32 @@
 # Smart Personal Time Optimizer (SPTO)
 
-A simple Java-based project that helps users manage their daily tasks effectively by assigning priorities, scheduling time, and generating productivity reports.
+A **console-based Java application** that helps users manage and organize their daily tasks efficiently by assigning priorities, tracking completion status, and storing data in a **SQL database**.
 
 ---
 
 ## 🚀 Features
-- Add and manage tasks with **priority**.
-- Mark tasks as **Completed / Pending**.
-- (Future scope) Auto scheduling of tasks based on deadlines.
-- (Future scope) Generate **daily reports** of completed tasks.
+
+- Add and manage tasks with **priority** (HIGH / MEDIUM / LOW).  
+- Mark tasks as **Completed / Pending**.  
+- Delete tasks or search tasks by **title keyword**.  
+- View tasks filtered by **priority**.  
+- Generate **task summary reports** (total, completed, pending).  
+- **Database integration:** Tasks are stored and retrieved from **MySQL / SQL database**.  
+- Assign **deadlines** to tasks and view **overdue tasks**.  
+- Sort tasks by **priority** or **deadline**.  
+- **Future scope:** Console reminders for **due tasks**.  
+- **Future scope:** Daily/weekly productivity summaries using database queries.
 
 ---
 
 ## 🛠️ Technologies Used
-- **Frontend:html,css**
-- **Java (Core Java, OOP Concepts)**
-- **Collections (ArrayList, etc.)**
-- **File Handling** 
+
+- **Java (Core & OOP concepts)**  
+- **Collections:** Used lightly for in-memory operations (ArrayList, etc.)  
+- **SQL Database:** MySQL / any relational DB for persistent storage  
+- **JDBC:** Java Database Connectivity to interact with SQL  
+
 ---
+
+
+
