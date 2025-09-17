@@ -52,7 +52,7 @@ public class Main {
             System.out.println("9. Exit");
             System.out.print("Enter choice: ");
             choice = sc.nextInt();
-            sc.nextLine(); // consume newline
+            sc.nextLine();
 
             switch (choice) {
                 case 1 -> addTask(sc);
@@ -90,41 +90,36 @@ public class Main {
         } else {
             System.out.println("\n--- Task List ---");
             tasks.forEach(System.out::println);
-
         }
     }
 
     private static void markTaskCompleted(Scanner sc) {
         if (tasks.isEmpty()) {
-            System.out.println("No tasks available to mark!");
+            System.out.println("No tasks to mark!");
             return;
         }
-        System.out.print("Enter Task ID to mark as completed: ");
+        System.out.print("Enter task ID to mark as completed: ");
         int id = sc.nextInt();
-        boolean found = false;
 
         for (Task t : tasks) {
             if (t.getId() == id) {
                 t.setCompleted(true);
                 System.out.println("Task marked as completed!");
-                found = true;
-                break;
+                return;
             }
         }
-        if (!found) {
-            System.out.println("Task not found!");
-        }
+        System.out.println("Task not found!");
     }
 
     private static void deleteTask(Scanner sc) {
         if (tasks.isEmpty()) {
-            System.out.println("No tasks available to delete!");
+            System.out.println("No tasks to delete!");
             return;
         }
-        System.out.print("Enter Task ID to delete: ");
+        System.out.print("Enter task ID to delete: ");
         int id = sc.nextInt();
-        boolean removed = tasks.removeIf(t -> t.getId() == id);
 
+        boolean removed = tasks.removeIf(t -> t.getId() == id);
         if (removed) {
             System.out.println("Task deleted successfully!");
         } else {
@@ -206,42 +201,5 @@ public class Main {
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Error loading tasks: " + e.getMessage());
         }
-    }
-
-     private static void markTaskCompleted(Scanner sc) {
-        if (tasks.isEmpty()) {
-            System.out.println("No tasks to mark!");
-            return;
-        }
-
-        System.out.print("Enter task ID to mark as completed: ");
-        int id = sc.nextInt();
-
-        for (Task t : tasks) {
-            if (t.getId() == id) {
-                t.setCompleted(true);
-                System.out.println("Task marked as completed!");
-                return;
-            }
-        }
-        System.out.println("Task not found!");
-    }
-
-       private static void deleteTask(Scanner sc) {
-        if (tasks.isEmpty()) {
-            System.out.println("No tasks to delete!");
-            return;
-        }
-        System.out.print("Enter task ID to delete: ");
-        int id = sc.nextInt();
-
-        for (Task t : tasks) {
-            if (t.getId() == id) {
-                tasks.remove(t);
-                System.out.println("Task deleted successfully!");
-                return;
-            }
-        }
-        System.out.println("Task not found!");
     }
 }
