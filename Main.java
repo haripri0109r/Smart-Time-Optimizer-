@@ -95,29 +95,7 @@ public class Main {
 
     private static void markTaskCompleted(Scanner sc) {
         if (tasks.isEmpty()) {
-            System.out.println("No tasks to mark!");
-            return;
-        }
-        System.out.print("Enter task ID to mark as completed: ");
-        int id = sc.nextInt();
-
-        for (Task t : tasks) {
-            if (t.getId() == id) {
-                t.setCompleted(true);
-                System.out.println("Task marked as completed!");
-                return;
-            }
-        }
-        System.out.println("Task not found!");
-    }
-
-    private static void deleteTask(Scanner sc) {
-        if (tasks.isEmpty()) {
-            System.out.println("No tasks to delete!");
-            return;
-        }
-        System.out.print("Enter task ID to delete: ");
-        int id = sc.nextInt();
+            System.out.printl      int id = sc.nextInt();
 
         boolean removed = tasks.removeIf(t -> t.getId() == id);
         if (removed) {
