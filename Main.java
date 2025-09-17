@@ -90,6 +90,7 @@ public class Main {
         } else {
             System.out.println("\n--- Task List ---");
             tasks.forEach(System.out::println);
+
         }
     }
 
