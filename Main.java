@@ -6,25 +6,39 @@ class Task {
     private int id;
     private String title;
     private String priority;
-    private boolean isCompleted;
+    private boolean completed;
 
     public Task(int id, String title, String priority) {
         this.id = id;
         this.title = title;
         this.priority = priority;
-        this.isCompleted = false;
+        this.completed = false;
     }
 
-    public int getId() { return id; }
-    public String getTitle() { return title; }
-    public String getPriority() { return priority; }
-    public boolean isCompleted() { return isCompleted; }
+    public int getId() {
+         return id; 
+        }
+    public String getTitle() 
+    { 
+        return title; 
+    }
+    public String getPriority() 
+    { 
+        return priority; 
+    }
+    public boolean completed() 
+    {
+         return completed; 
+    }
 
-    public void setCompleted(boolean completed) { this.isCompleted = completed; }
+    public void setCompleted(boolean completed) 
+    { 
+        this.completed = completed; 
+    }
 
     @Override
     public String toString() {
-        return id + " | " + title + " | Priority: " + priority + " | Status: " + (isCompleted ? "Completed" : "Pending");
+        return id + " | " + title + " | Priority: " + priority + " | Status: " + (completed ? "Completed" : "Pending");
     }
 }
 
@@ -42,7 +56,7 @@ public class Main {
             System.out.println("3. Mark Task Completed");
             System.out.println("4. Delete Task");
             System.out.println("5. Report Summary");
-            System.out.println("6. View Tasks by Priority");
+            System.out.println("6. View Tasks by ");
             System.out.println("7. Search Task by Title");
             System.out.println("8. Exit");
             System.out.print("Enter choice: ");
@@ -65,7 +79,7 @@ public class Main {
     }
 
     private static void addTask(Scanner sc) {
-        System.out.print("Enter task title: ");
+        System.out.print("Enter task name : ");
         String title = sc.nextLine();
         System.out.print("Enter priority (HIGH/MEDIUM/LOW): ");
         String priority = sc.nextLine().toUpperCase();
@@ -77,7 +91,7 @@ public class Main {
 
     private static void viewTasks() {
         if (tasks.isEmpty()) {
-            System.out.println("No tasks available!");
+            System.out.println("No tasks are available!");
         } else {
             System.out.println("\n--- Task List ---");
             tasks.forEach(System.out::println);
@@ -86,16 +100,16 @@ public class Main {
 
     private static void markTaskCompleted(Scanner sc) {
         if (tasks.isEmpty()) {
-            System.out.println("No tasks to mark!");
+            System.out.println("No tasks is to mark!");
             return;
         }
-        System.out.print("Enter task ID to mark as completed: ");
+        System.out.print("Enter task's ID to mark as completed: ");
         int id = sc.nextInt();
 
         for (Task t : tasks) {
             if (t.getId() == id) {
                 t.setCompleted(true);
-                System.out.println("Task marked as completed!");
+                System.out.println("Task is completed!");
                 return;
             }
         }
@@ -104,7 +118,7 @@ public class Main {
 
     private static void deleteTask(Scanner sc) {
         if (tasks.isEmpty()) {
-            System.out.println("No tasks to delete!");
+            System.out.println("No tasks is here!");
             return;
         }
         System.out.print("Enter task ID to delete: ");
@@ -113,24 +127,24 @@ public class Main {
         for (Task t : tasks) {
             if (t.getId() == id) {
                 tasks.remove(t);
-                System.out.println("Task deleted!");
+                System.out.println("Task is deleted!");
                 return;
             }
         }
-        System.out.println("Task not found!");
+        System.out.println("Task is not found!");
     }
 
     private static void reportSummary() {
-        long completed = tasks.stream().filter(Task::isCompleted).count();
-        long pending = tasks.size() - completed;
+        long lcompleted = tasks.stream().filter(Task::completed).count();
+        long pending = tasks.size() - lcompleted;
         System.out.println("Total Tasks: " + tasks.size());
-        System.out.println("Completed: " + completed);
+        System.out.println("Completed: " + lcompleted);
         System.out.println("Pending: " + pending);
     }
 
     private static void viewTasksByPriority(Scanner sc) {
         if (tasks.isEmpty()) {
-            System.out.println("No tasks available!");
+            System.out.println("No tasks is available!");
             return;
         }
         System.out.print("Enter priority to filter (HIGH/MEDIUM/LOW): ");
@@ -143,10 +157,10 @@ public class Main {
 
     private static void searchTaskByTitle(Scanner sc) {
         if (tasks.isEmpty()) {
-            System.out.println("No tasks available!");
+            System.out.println("No tasks is available!");
             return;
         }
-        System.out.print("Enter keyword to search in title: ");
+        System.out.print("Enter keyword to search the task: ");
         String keyword = sc.nextLine().toLowerCase();
 
         tasks.stream()
