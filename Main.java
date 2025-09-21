@@ -1,170 +1,135 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 class Task {
-    private int id;
-    private String title;
-    private String priority;
-    private boolean completed;
+    int id;
+    String name;
+    String prio;
+    boolean done;
 
-    public Task(int id, String title, String priority) {
-        this.id = id;
-        this.title = title;
-        this.priority = priority;
-        this.completed = false;
-    }
-
-    public int getId() {
-         return id; 
-        }
-    public String getTitle() 
-    { 
-        return title; 
-    }
-    public String getPriority() 
-    { 
-        return priority; 
-    }
-    public boolean completed() 
-    {
-         return completed; 
+    Task(int i, String n, String p) {
+        id = i;
+        name = n;
+        prio = p;
+        done = false;
     }
 
-    public void setCompleted(boolean completed) 
-    { 
-        this.completed = completed; 
-    }
-
-    @Override
     public String toString() {
-        return id + " | " + title + " | Priority: " + priority + " | Status: " + (completed ? "Completed" : "Pending");
+        if (done) return id + ") " + name + " - " + prio + " - Done ";
+
+        else return id + ") " + name + " - " + prio + " - Pending ";
     }
 }
 
 public class Main {
-    private static List<Task> tasks = new ArrayList<>();
-    private static int counter = 1;
+    static ArrayList<Task> arr = new ArrayList<>();
+    static int c = 1;
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int choice;
-        do {
-            System.out.println("\n--- Smart Time ---");
-            System.out.println("1. Add Task");
-            System.out.println("2. View All Tasks");
-            System.out.println("3. Mark Task Completed");
-            System.out.println("4. Delete Task");
-            System.out.println("5. Report Summary");
-            System.out.println("6. View Tasks by ");
-            System.out.println("7. Search Task by Title");
-            System.out.println("8. Exit");
-            System.out.print("Enter choice: ");
-            choice = sc.nextInt();
-            sc.nextLine();
+        Scanner s = new Scanner(System.in);
+        int op = 0;
+        while (op != 8) {
+            System.out.println("\n==== SMART TIME ====");
+            System.out.println("1 Add");
+            System.out.println("2 Show");
+            System.out.println("3 Complete");
+            System.out.println("4 Delete");
+            System.out.println("5 Summary");
+            System.out.println("6 Filter");
+            System.out.println("7 Search");
+            System.out.println("8 Exit");
+            System.out.print("Enter number: ");
+            op = s.nextInt();
+            s.nextLine();
 
-            switch (choice) {
-                case 1 -> addTask(sc);
-                case 2 -> viewTasks();
-                case 3 -> markTaskCompleted(sc);
-                case 4 -> deleteTask(sc);
-                case 5 -> reportSummary();
-                case 6 -> viewTasksByPriority(sc);
-                case 7 -> searchTaskByTitle(sc);
-                case 8 -> System.out.println("Exiting...");
-                default -> System.out.println("Invalid choice!");
-            }
-        } while (choice != 8);
-        sc.close();
-    }
-
-    private static void addTask(Scanner sc) {
-        System.out.print("Enter task name : ");
-        String title = sc.nextLine();
-        System.out.print("Enter priority (HIGH/MEDIUM/LOW): ");
-        String priority = sc.nextLine().toUpperCase();
-
-        Task t = new Task(counter++, title, priority);
-        tasks.add(t);
-        System.out.println("Task added successfully!");
-    }
-
-    private static void viewTasks() {
-        if (tasks.isEmpty()) {
-            System.out.println("No tasks are available!");
-        } else {
-            System.out.println("\n--- Task List ---");
-            tasks.forEach(System.out::println);
+            if (op == 1) add(s);
+            else if (op == 2) show();
+            else if (op == 3) completed(s);
+            else if (op == 4) delete(s);
+            else if (op == 5) report();
+            else if (op == 6) filter(s);
+            else if (op == 7) search(s);
+            else if (op == 8) System.out.println("exiting");
+            else System.out.println("invalid option");
         }
     }
 
-    private static void markTaskCompleted(Scanner sc) {
-        if (tasks.isEmpty()) {
-            System.out.println("No tasks is to mark!");
+    public static void add(Scanner s) {
+        System.out.print("Task name: ");
+        String n = s.nextLine();
+        System.out.print("Priority: ");
+        String p = s.nextLine();
+        arr.add(new Task(c++, n, p.toUpperCase()));
+
+        System.out.println("Task added ");
+    }
+
+    public static void show() {
+
+        if (arr.size() == 0) {
+            System.out.println("Nothing here ");
             return;
         }
-        System.out.print("Enter task's ID to mark as completed: ");
-        int id = sc.nextInt();
+        for (Task t : arr) {
+            System.out.println(t);
+        }
+    }
 
-        for (Task t : tasks) {
-            if (t.getId() == id) {
-                t.setCompleted(true);
-                System.out.println("Task is completed!");
+    public static void completed(Scanner s) {
+        
+        System.out.print("Enter id: ");
+        int id = s.nextInt();
+        for (Task t : arr) {
+            if (t.id == id) {
+                t.done = true;
+                System.out.println("Marked as done ");
                 return;
             }
         }
-        System.out.println("Task not found!");
+        System.out.println("Id not found");
     }
 
-    private static void deleteTask(Scanner sc) {
-        if (tasks.isEmpty()) {
-            System.out.println("No tasks is here!");
-            return;
-        }
-        System.out.print("Enter task ID to delete: ");
-        int id = sc.nextInt();
-
-        for (Task t : tasks) {
-            if (t.getId() == id) {
-                tasks.remove(t);
-                System.out.println("Task is deleted!");
+    public static void delete(Scanner s) {
+        System.out.print("Enter id: ");
+        int id = s.nextInt();
+        for (int i = 0; i < arr.size(); i++) {
+            if (arr.get(i).id == id) {
+                arr.remove(i);
+                System.out.println("Removed ");
                 return;
             }
         }
-        System.out.println("Task is not found!");
+        System.out.println("Not found ");
     }
 
-    private static void reportSummary() {
-        long lcompleted = tasks.stream().filter(Task::completed).count();
-        long pending = tasks.size() - lcompleted;
-        System.out.println("Total Tasks: " + tasks.size());
-        System.out.println("Completed: " + lcompleted);
-        System.out.println("Pending: " + pending);
-    }
-
-    private static void viewTasksByPriority(Scanner sc) {
-        if (tasks.isEmpty()) {
-            System.out.println("No tasks is available!");
-            return;
+    public static void report() {
+        int d = 0;
+        for (Task t : arr) {
+            if (t.done) d++;
         }
-        System.out.print("Enter priority to filter (HIGH/MEDIUM/LOW): ");
-        String priority = sc.nextLine().toUpperCase();
-
-        tasks.stream()
-             .filter(t -> t.getPriority().equals(priority))
-             .forEach(System.out::println);
+        int p = arr.size() - d;
+        System.out.println("Total: " + arr.size());
+        System.out.println("Done: " + d);
+        System.out.println("Pending: " + p);
     }
 
-    private static void searchTaskByTitle(Scanner sc) {
-        if (tasks.isEmpty()) {
-            System.out.println("No tasks is available!");
-            return;
+    public static void filter(Scanner s) {
+        System.out.print("Enter priority: ");
+        String pr = s.nextLine().toUpperCase();
+        for (Task t : arr) {
+            if (t.prio.equals(pr)) {
+                System.out.println(t);
+            }
         }
-        System.out.print("Enter keyword to search the task: ");
-        String keyword = sc.nextLine().toLowerCase();
+    }
 
-        tasks.stream()
-             .filter(t -> t.getTitle().toLowerCase().contains(keyword))
-             .forEach(System.out::println);
+    public static void search(Scanner s) {
+        System.out.print("Enter keyword: ");
+        String k = s.nextLine().toLowerCase();
+
+        for (Task t : arr) {
+            if (t.name.toLowerCase().contains(k)) {
+                System.out.println(t);
+            }
+        }
     }
 }
