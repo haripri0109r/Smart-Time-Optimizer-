@@ -3,25 +3,26 @@ import java.util.*;
 class Task {
     int id;
     String name;
-    String prio;
+    String rank;
     boolean done;
 
     Task(int i, String n, String p) {
         id = i;
         name = n;
-        prio = p;
+        rank = p;
         done = false;
     }
 
     public String toString() {
-        if (done) return id + ") " + name + " - " + prio + " - Done ";
+        
+        if (done) return id + ") " + name + " - " + rank + " - Done ";
 
-        else return id + ") " + name + " - " + prio + " - Pending ";
+        else return id + ") " + name + " - " + rank + " - Pending ";
     }
 }
 
 public class Main {
-    static ArrayList<Task> arr = new ArrayList<>();
+    static List<Task> arr = new ArrayList<>();
     static int c = 1;
 
     public static void main(String[] args) {
@@ -29,19 +30,22 @@ public class Main {
         int op = 0;
         while (op != 8) {
             System.out.println("\n==== SMART TIME ====");
-            System.out.println("1 Add");
-            System.out.println("2 Show");
-            System.out.println("3 Complete");
-            System.out.println("4 Delete");
-            System.out.println("5 Summary");
-            System.out.println("6 Filter");
-            System.out.println("7 Search");
-            System.out.println("8 Exit");
+
+            System.out.println("1.Add");
+            System.out.println("2.Show");
+            System.out.println("3.Complete");
+            System.out.println("4.Delete");
+            System.out.println("5.Summary");
+            System.out.println("6.Filter");
+            System.out.println("7.Search");
+            System.out.println("8.Exit");
             System.out.print("Enter number: ");
+
             op = s.nextInt();
             s.nextLine();
 
-            if (op == 1) add(s);
+            if (op == 1)  add(s);
+
             else if (op == 2) show();
             else if (op == 3) completed(s);
             else if (op == 4) delete(s);
@@ -66,7 +70,7 @@ public class Main {
     public static void show() {
 
         if (arr.size() == 0) {
-            System.out.println("Nothing here ");
+            System.out.println("No task is here ");
             return;
         }
         for (Task t : arr) {
@@ -85,7 +89,7 @@ public class Main {
                 return;
             }
         }
-        System.out.println("Id not found");
+        System.out.println("Id is not there");
     }
 
     public static void delete(Scanner s) {
@@ -98,7 +102,7 @@ public class Main {
                 return;
             }
         }
-        System.out.println("Not found ");
+        System.out.println("Id is not there");
     }
 
     public static void report() {
@@ -107,6 +111,7 @@ public class Main {
             if (t.done) d++;
         }
         int p = arr.size() - d;
+
         System.out.println("Total: " + arr.size());
         System.out.println("Done: " + d);
         System.out.println("Pending: " + p);
@@ -114,9 +119,11 @@ public class Main {
 
     public static void filter(Scanner s) {
         System.out.print("Enter priority: ");
+
         String pr = s.nextLine().toUpperCase();
+
         for (Task t : arr) {
-            if (t.prio.equals(pr)) {
+            if (t.rank.equals(pr)) {
                 System.out.println(t);
             }
         }
@@ -127,7 +134,9 @@ public class Main {
         String k = s.nextLine().toLowerCase();
 
         for (Task t : arr) {
+
             if (t.name.toLowerCase().contains(k)) {
+
                 System.out.println(t);
             }
         }
