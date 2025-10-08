@@ -1,6 +1,7 @@
 import java.util.*;
 
 class Task {
+
     int id;
     String name;
     String rank;
@@ -15,9 +16,11 @@ class Task {
 
     public String toString() {
         
-        if (done) return id + ") " + name + " - " + rank + " - Done ";
+        if (done) 
+           return id + ") " + name + " - " + rank + " - Done ";
 
-        else return id + ") " + name + " - " + rank + " - Pending ";
+        else 
+           return id + ") " + name + " - " + rank + " - Pending ";
     }
 }
 
@@ -26,8 +29,12 @@ public class Main {
     static int c = 1;
 
     public static void main(String[] args) {
+
         Scanner s = new Scanner(System.in);
         int op = 0;
+
+        System.out.println("Welcome to SMART TIME! Let's be productive!");
+
         while (op != 8) {
             System.out.println("\n==== SMART TIME ====");
 
@@ -35,7 +42,7 @@ public class Main {
             System.out.println("2.Show");
             System.out.println("3.Complete");
             System.out.println("4.Delete");
-            System.out.println("5.Summary");
+            System.out.println("5.Report");
             System.out.println("6.Filter");
             System.out.println("7.Search");
             System.out.println("8.Exit");
@@ -52,27 +59,29 @@ public class Main {
             else if (op == 5) report();
             else if (op == 6) filter(s);
             else if (op == 7) search(s);
-            else if (op == 8) System.out.println("exiting");
+            else if (op == 8) System.out.println("Exiting... Stay productive!");
             else System.out.println("invalid option");
         }
     }
 
     public static void add(Scanner s) {
+
         System.out.print("Task name: ");
         String n = s.nextLine();
         System.out.print("Priority: ");
         String p = s.nextLine();
         arr.add(new Task(c++, n, p.toUpperCase()));
 
-        System.out.println("Task added ");
+        System.out.println("Task added");
     }
 
     public static void show() {
 
         if (arr.size() == 0) {
-            System.out.println("No task is here ");
+            System.out.println("No task is here");
             return;
         }
+
         for (Task t : arr) {
             System.out.println(t);
         }
@@ -84,8 +93,13 @@ public class Main {
         int id = s.nextInt();
         for (Task t : arr) {
             if (t.id == id) {
-                t.done = true;
-                System.out.println("Marked as done ");
+                if (!t.done) {
+                    t.done = true;
+                    System.out.println("Marked as done");
+                    motivationalReply();  // call motivational message
+                } else {
+                    System.out.println("Task was already done");
+                }
                 return;
             }
         }
@@ -93,12 +107,13 @@ public class Main {
     }
 
     public static void delete(Scanner s) {
+
         System.out.print("Enter id: ");
         int id = s.nextInt();
         for (int i = 0; i < arr.size(); i++) {
             if (arr.get(i).id == id) {
                 arr.remove(i);
-                System.out.println("Removed ");
+                System.out.println("Removed");
                 return;
             }
         }
@@ -141,4 +156,17 @@ public class Main {
             }
         }
     }
+    
+    public static void motivationalReply() {
+        String[] quotes = {
+            "Great job! Keep the momentum going!",
+            "Another task conquered! You're unstoppable!",
+            "Success is built one task at a time!",
+            "Well done! Your hard work is paying off!",
+            "Keep pushing forward, one step at a time!"
+        };
+        int index = new Random().nextInt(quotes.length);
+        System.out.println("Motivational Auto-Reply: " + quotes[index]);
+    }
+    
 }
